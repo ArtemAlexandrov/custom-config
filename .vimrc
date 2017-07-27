@@ -1,4 +1,4 @@
-let mapleader = "\\"
+let mapleader = " "
 set nocompatible              " be iMproved, required
 set number
 set numberwidth=5
@@ -14,6 +14,7 @@ set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
+set autochdir
 set tabstop=2
 set shiftwidth=2
 set shiftround
@@ -30,8 +31,10 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
-
+Plugin 'xolox/vim-easytags'
+Plugin 'airblade/vim-rooter'
 Plugin 'kana/vim-textobj-user'
+Plugin 'xolox/vim-misc'
 Plugin 'pangloss/vim-javascript'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'easymotion/vim-easymotion'
@@ -80,14 +83,14 @@ if !exists('g:splitresize_vmin') | let g:splitresize_vmin = 20 | en
 if !exists('g:splitresize_hmax') | let g:splitresize_hmax = 80 | en
 if !exists('g:splitresize_vmax') | let g:splitresize_vmax = 60 | en
 
-nn <silent><C-J> <C-W><C-J>:call Splitresize()<CR>
-nn <silent><C-K> <C-W><C-K>:call Splitresize()<CR>
-nn <silent><C-L> <C-W><C-L>:call Splitresize()<CR>
-nn <silent><C-H> <C-W><C-H>:call Splitresize()<CR>
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
 
 function! Splitresize()
-  let hmax = max([winwidth(0), float2nr(&columns*0.75), g:splitresize_hmin])
-  let vmax = max([winheight(0), float2nr(&lines*0.75), g:splitresize_vmin])
+  let hmax = max([winwidth(0), float2nr(&columns*0.85), g:splitresize_hmin])
+  let vmax = max([winheight(0), float2nr(&lines*0.85), g:splitresize_vmin])
   exe "vertical resize" . (min([hmax, g:splitresize_hmax]))
   exe "resize" . (min([vmax, g:splitresize_vmax]))
 endfunction
@@ -97,3 +100,6 @@ call pathogen#infect()
 
 syntax on
 filetype plugin indent on    " required
+let g:rooter_patterns = ['Rakefile', '.git/']
+let g:easytags_opts = ['--tag-relative=yes']
+
